@@ -1,0 +1,55 @@
+{
+  "name": "TransactionEntity",
+  "fields": [
+    {
+      "fieldName": "transAmmount",
+      "fieldType": "Double",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "transDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "transType",
+      "fieldType": "TransType",
+      "fieldValues": "DEBIT,CREDIT",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "entryDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "accountEntity",
+      "otherEntityRelationshipName": "transactionEntity",
+      "relationshipName": "accountEntity",
+      "otherEntityField": "code"
+    }
+  ],
+  "changelogDate": "20200928075650",
+  "entityTableName": "transaction_entity",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

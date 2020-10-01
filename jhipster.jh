@@ -1,0 +1,22 @@
+entity AccountEntity {
+ code Integer unique 
+ accountName  String required unique 
+ description  String required
+ openingBalance  Double required
+ closingBalance Double 
+ createdAt Instant
+}
+enum TransType {
+ DEBIT, CREDIT
+}
+entity TransactionEntity {
+ transAmmount Double required
+ transDate LocalDate required
+ transType TransType required
+ entryDate Instant 
+ Description String
+}
+
+relationship OneToMany {
+   AccountEntity{TransactionEntity} to TransactionEntity{AccountEntity(code)}
+}
