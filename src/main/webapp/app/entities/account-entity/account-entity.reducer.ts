@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IAccountEntity, defaultValue } from 'app/shared/model/account-entity.model';
+import { ITransactionEntity } from 'app/shared/model/transaction-entity.model';
 
 export const ACTION_TYPES = {
   FETCH_ACCOUNTENTITY_LIST: 'accountEntity/FETCH_ACCOUNTENTITY_LIST',
@@ -12,6 +13,7 @@ export const ACTION_TYPES = {
   CREATE_ACCOUNTENTITY: 'accountEntity/CREATE_ACCOUNTENTITY',
   UPDATE_ACCOUNTENTITY: 'accountEntity/UPDATE_ACCOUNTENTITY',
   DELETE_ACCOUNTENTITY: 'accountEntity/DELETE_ACCOUNTENTITY',
+  FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY: 'accountEntity/FETCH_TRANSACTION_LIST',
   RESET: 'accountEntity/RESET',
 };
 
@@ -109,6 +111,16 @@ export const getEntity: ICrudGetAction<IAccountEntity> = id => {
   return {
     type: ACTION_TYPES.FETCH_ACCOUNTENTITY,
     payload: axios.get<IAccountEntity>(requestUrl),
+  };
+};
+
+const apiUrl2 = 'api/transaction-entities/account-entities';
+
+export const getTransactionByAccountEntities: ICrudGetAllAction<ITransactionEntity> = id => {
+  const requestUrl = `${apiUrl2}/${id}`;
+  return {
+    type: ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY,
+    payload: axios.get<ITransactionEntity>(requestUrl),
   };
 };
 

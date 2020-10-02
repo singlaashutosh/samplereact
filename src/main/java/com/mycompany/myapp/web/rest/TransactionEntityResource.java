@@ -6,6 +6,8 @@ import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.micrometer.core.annotation.Timed;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.mycompany.myapp.domain.TransactionEntity}.
@@ -115,5 +119,21 @@ public class TransactionEntityResource {
         log.debug("REST request to delete TransactionEntity : {}", id);
         transactionEntityRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+    }
+    @GetMapping("/transaction-entities/account-entities/{AccountEntityCode}")
+    @Timed
+    public Set<TransactionEntity> findAllTransactionsforAccountEntityCode(@PathVariable Integer AccountEntityCode) {
+    log.debug("REST request to get all TransactionEntity for AccountEntity : {}", AccountEntityCode);
+     
+    Set<TransactionEntity> actions= transactionEntityRepository.findByAccountEntityCode(AccountEntityCode);
+    return actions;
+    }
+    @GetMapping("/transaction-entities/Date/{transDate}")
+    @Timed
+    public Set<TransactionEntity> findAllTransactionsbyDate(@PathVariable LocalDate transDate ) {
+    log.debug("REST request to get all TransactionEntity for transDate : {}",transDate);
+     
+    Set<TransactionEntity> actions= transactionEntityRepository.findBytransDate(transDate);
+    return actions;
     }
 }
