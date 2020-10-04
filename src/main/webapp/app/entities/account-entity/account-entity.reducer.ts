@@ -34,6 +34,7 @@ export default (state: AccountEntityState = initialState, action): AccountEntity
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_ACCOUNTENTITY_LIST):
     case REQUEST(ACTION_TYPES.FETCH_ACCOUNTENTITY):
+    case REQUEST(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY):
       return {
         ...state,
         errorMessage: null,
@@ -53,6 +54,7 @@ export default (state: AccountEntityState = initialState, action): AccountEntity
     case FAILURE(ACTION_TYPES.FETCH_ACCOUNTENTITY):
     case FAILURE(ACTION_TYPES.CREATE_ACCOUNTENTITY):
     case FAILURE(ACTION_TYPES.UPDATE_ACCOUNTENTITY):
+    case FAILURE(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY):
     case FAILURE(ACTION_TYPES.DELETE_ACCOUNTENTITY):
       return {
         ...state,
@@ -62,6 +64,12 @@ export default (state: AccountEntityState = initialState, action): AccountEntity
         errorMessage: action.payload,
       };
     case SUCCESS(ACTION_TYPES.FETCH_ACCOUNTENTITY_LIST):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data,
+      };
+    case SUCCESS(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY):
       return {
         ...state,
         loading: false,
