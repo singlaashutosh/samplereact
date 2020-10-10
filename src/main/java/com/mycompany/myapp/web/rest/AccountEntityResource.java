@@ -1,7 +1,9 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.AccountEntity;
+import com.mycompany.myapp.domain.TransactionEntity;
 import com.mycompany.myapp.repository.AccountEntityRepository;
+import com.mycompany.myapp.repository.TransactionEntityRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -18,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.mycompany.myapp.domain.AccountEntity}.
@@ -35,9 +38,10 @@ public class AccountEntityResource {
     private String applicationName;
 
     private final AccountEntityRepository accountEntityRepository;
-
-    public AccountEntityResource(AccountEntityRepository accountEntityRepository) {
+    private final TransactionEntityRepository transactionEntityRepository;
+    public AccountEntityResource(AccountEntityRepository accountEntityRepository,TransactionEntityRepository transactionEntityRepository) {
         this.accountEntityRepository = accountEntityRepository;
+        this.transactionEntityRepository=transactionEntityRepository ;
     }
 
     /**
@@ -101,6 +105,8 @@ public class AccountEntityResource {
     public ResponseEntity<AccountEntity> getAccountEntity(@PathVariable Long id) {
         log.debug("REST request to get AccountEntity : {}", id);
         Optional<AccountEntity> accountEntity = accountEntityRepository.findById(id);
+        Set<TransactionEntity> transactionEntities= transactionEntityRepository.findByAccountEntityCode(accountEntity.get().getCode());
+        accountEntity.get().setTransactionEntities(transactionEntities);
         return ResponseUtil.wrapOrNotFound(accountEntity);
     }
 

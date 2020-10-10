@@ -5,15 +5,14 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IAccountEntity, defaultValue } from 'app/shared/model/account-entity.model';
-import { ITransactionEntity } from 'app/shared/model/transaction-entity.model';
-
+// import { ITransactionEntity } from 'app/shared/model/transaction-entity.model';
 export const ACTION_TYPES = {
   FETCH_ACCOUNTENTITY_LIST: 'accountEntity/FETCH_ACCOUNTENTITY_LIST',
   FETCH_ACCOUNTENTITY: 'accountEntity/FETCH_ACCOUNTENTITY',
   CREATE_ACCOUNTENTITY: 'accountEntity/CREATE_ACCOUNTENTITY',
   UPDATE_ACCOUNTENTITY: 'accountEntity/UPDATE_ACCOUNTENTITY',
   DELETE_ACCOUNTENTITY: 'accountEntity/DELETE_ACCOUNTENTITY',
-  FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY: 'accountEntity/FETCH_TRANSACTION_LIST',
+  // FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY: 'accountEntity/FETCH_TRANSACTION_LIST',
   RESET: 'accountEntity/RESET',
 };
 
@@ -34,7 +33,6 @@ export default (state: AccountEntityState = initialState, action): AccountEntity
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_ACCOUNTENTITY_LIST):
     case REQUEST(ACTION_TYPES.FETCH_ACCOUNTENTITY):
-    case REQUEST(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY):
       return {
         ...state,
         errorMessage: null,
@@ -54,7 +52,6 @@ export default (state: AccountEntityState = initialState, action): AccountEntity
     case FAILURE(ACTION_TYPES.FETCH_ACCOUNTENTITY):
     case FAILURE(ACTION_TYPES.CREATE_ACCOUNTENTITY):
     case FAILURE(ACTION_TYPES.UPDATE_ACCOUNTENTITY):
-    case FAILURE(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY):
     case FAILURE(ACTION_TYPES.DELETE_ACCOUNTENTITY):
       return {
         ...state,
@@ -64,12 +61,6 @@ export default (state: AccountEntityState = initialState, action): AccountEntity
         errorMessage: action.payload,
       };
     case SUCCESS(ACTION_TYPES.FETCH_ACCOUNTENTITY_LIST):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data,
-      };
-    case SUCCESS(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_BY_ACCOUNTENTITY):
       return {
         ...state,
         loading: false,
@@ -121,7 +112,7 @@ export const getEntity: ICrudGetAction<IAccountEntity> = id => {
     payload: axios.get<IAccountEntity>(requestUrl),
   };
 };
-
+/*
 const apiUrl2 = 'api/transaction-entities/account-entities';
 
 export const getTransactionByAccountEntities: ICrudGetAllAction<ITransactionEntity> = id => {
@@ -131,7 +122,7 @@ export const getTransactionByAccountEntities: ICrudGetAllAction<ITransactionEnti
     payload: axios.get<ITransactionEntity>(requestUrl),
   };
 };
-
+*/
 export const createEntity: ICrudPutAction<IAccountEntity> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_ACCOUNTENTITY,

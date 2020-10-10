@@ -1,7 +1,9 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.AccountEntity;
 import com.mycompany.myapp.domain.TransactionEntity;
 import com.mycompany.myapp.repository.TransactionEntityRepository;
+import com.mycompany.myapp.repository.AccountEntityRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -40,8 +42,11 @@ public class TransactionEntityResource {
 
     private final TransactionEntityRepository transactionEntityRepository;
 
-    public TransactionEntityResource(TransactionEntityRepository transactionEntityRepository) {
+    private final AccountEntityRepository accountEntityRepository;
+
+    public TransactionEntityResource(TransactionEntityRepository transactionEntityRepository,AccountEntityRepository accountEntityRepository) {
         this.transactionEntityRepository = transactionEntityRepository;
+        this.accountEntityRepository = accountEntityRepository;
     }
 
     /**
@@ -120,12 +125,14 @@ public class TransactionEntityResource {
         transactionEntityRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
-    @GetMapping("/transaction-entities/account-entities/{AccountEntityCode}")
+    @GetMapping("/transaction-entities/account-entities/{id}")
     @Timed
-    public Set<TransactionEntity> findAllTransactionsforAccountEntityCode(@PathVariable Integer AccountEntityCode) {
-    log.debug("REST request to get all TransactionEntity for AccountEntity : {}", AccountEntityCode);
-     
-    Set<TransactionEntity> actions= transactionEntityRepository.findByAccountEntityCode(AccountEntityCode);
+    public Set<TransactionEntity> findAllTransactionsforAccountEntityCode(@PathVariable Long id) {
+    log.debug("REST request to get all TransactionEntity for AccountEntity : {}", id);
+    
+    Optional<AccountEntity> accountEntity = accountEntityRepository.findById(id);
+
+    Set<TransactionEntity> actions= transactionEntityRepository.findByAccountEntityCode(accountEntity.get().getCode());
     return actions;
     }
     @GetMapping("/transaction-entities/Date/{transDate}")
