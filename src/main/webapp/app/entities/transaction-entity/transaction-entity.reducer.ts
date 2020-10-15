@@ -12,6 +12,7 @@ export const ACTION_TYPES = {
   CREATE_TRANSACTIONENTITY: 'transactionEntity/CREATE_TRANSACTIONENTITY',
   UPDATE_TRANSACTIONENTITY: 'transactionEntity/UPDATE_TRANSACTIONENTITY',
   DELETE_TRANSACTIONENTITY: 'transactionEntity/DELETE_TRANSACTIONENTITY',
+  FETCH_TRANSACTIONENTITY_LIST_DATE: 'transactionEntity/FETCH_TRANSACTIONENTITY_LIST_DATE',
   RESET: 'transactionEntity/RESET',
 };
 
@@ -32,6 +33,7 @@ export default (state: TransactionEntityState = initialState, action): Transacti
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST):
     case REQUEST(ACTION_TYPES.FETCH_TRANSACTIONENTITY):
+    case REQUEST(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_DATE):
       return {
         ...state,
         errorMessage: null,
@@ -48,6 +50,7 @@ export default (state: TransactionEntityState = initialState, action): Transacti
         updating: true,
       };
     case FAILURE(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST):
+    case FAILURE(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_DATE):
     case FAILURE(ACTION_TYPES.FETCH_TRANSACTIONENTITY):
     case FAILURE(ACTION_TYPES.CREATE_TRANSACTIONENTITY):
     case FAILURE(ACTION_TYPES.UPDATE_TRANSACTIONENTITY):
@@ -70,6 +73,12 @@ export default (state: TransactionEntityState = initialState, action): Transacti
         ...state,
         loading: false,
         entity: action.payload.data,
+      };
+    case SUCCESS(ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_DATE):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.CREATE_TRANSACTIONENTITY):
     case SUCCESS(ACTION_TYPES.UPDATE_TRANSACTIONENTITY):
@@ -112,6 +121,13 @@ export const getEntity: ICrudGetAction<ITransactionEntity> = id => {
   };
 };
 
+export const getEntitiesbydate: ICrudGetAction<ITransactionEntity> = id => {
+  const requestUrl = `${apiUrl}/Date/${id}`;
+  return {
+    type: ACTION_TYPES.FETCH_TRANSACTIONENTITY,
+    payload: axios.get<ITransactionEntity>(requestUrl),
+  };
+};
 export const createEntity: ICrudPutAction<ITransactionEntity> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_TRANSACTIONENTITY,

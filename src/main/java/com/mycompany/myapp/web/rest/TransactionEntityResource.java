@@ -13,6 +13,7 @@ import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -137,7 +138,7 @@ public class TransactionEntityResource {
     }
     @GetMapping("/transaction-entities/Date/{transDate}")
     @Timed
-    public Set<TransactionEntity> findAllTransactionsbyDate(@PathVariable LocalDate transDate ) {
+    public Set<TransactionEntity> findAllTransactionsbyDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate transDate ) {
     log.debug("REST request to get all TransactionEntity for transDate : {}",transDate);
      
     Set<TransactionEntity> actions= transactionEntityRepository.findBytransDate(transDate);

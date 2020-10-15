@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 import { ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './transaction-entity.reducer';
 import { ITransactionEntity } from 'app/shared/model/transaction-entity.model';
@@ -27,6 +27,7 @@ export const TransactionEntity = (props: ITransactionEntityProps) => {
           &nbsp; Create new Transaction Entity
         </Link>
       </h2>
+      
       <div className="table-responsive">
         {transactionEntityList && transactionEntityList.length > 0 ? (
           <Table responsive>
@@ -80,6 +81,9 @@ export const TransactionEntity = (props: ITransactionEntityProps) => {
                       </Button>
                       <Button tag={Link} to={`${match.url}/${transactionEntity.id}/delete`} color="danger" size="sm">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                      </Button>
+                      <Button tag={Link} to={`${match.url}/Date/${(transactionEntity.transDate)}`} color="info" size="sm">
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Date</span>
                       </Button>
                     </div>
                   </td>
