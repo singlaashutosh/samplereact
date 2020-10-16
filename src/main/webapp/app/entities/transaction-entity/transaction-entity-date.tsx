@@ -39,16 +39,14 @@ export const TransactionEntityDate = (props: ITransactionEntityDateProps) => {
       {transactionEntityDebitDateList&& transactionEntityDebitDateList.length > 0  ? (
   
   
-      <Table responsive>
+      <Table responsive  bordered size="sm">
          <thead>
             <tr>
                <th>Trans ID</th>
-               <th>Trans Ammount</th>
                <th>Trans Date</th>
-               <th>Trans Type</th>
-               <th>Entry Date</th>
+               <th>Trans Ammount</th>
                <th>Description</th>
-               <th />
+               
             </tr>
          </thead>
          <tbody>
@@ -59,18 +57,12 @@ export const TransactionEntityDate = (props: ITransactionEntityDateProps) => {
                <td>
                   {transactionEntity.id}
                </td>
-               <td>{transactionEntity.transAmmount}</td>
                <td>
                   {transactionEntity.transDate ? (
                   <TextFormat type="date" value={transactionEntity.transDate} format={APP_LOCAL_DATE_FORMAT} />
                   ) : null}
                </td>
-               <td>{transactionEntity.transType}</td>
-               <td>
-                  {transactionEntity.entryDate ? (
-                  <TextFormat type="date" value={transactionEntity.entryDate} format={APP_DATE_FORMAT} />
-                  ) : null}
-               </td>
+               <td>{transactionEntity.transAmmount}</td>
                <td>{transactionEntity.description}</td>
             </tr>
                   
@@ -91,14 +83,12 @@ export const TransactionEntityDate = (props: ITransactionEntityDateProps) => {
 </div>
    <div className="table-responsive">
       {transactionEntityCREDITDateList && transactionEntityCREDITDateList.length > 0  ? (
-      <Table responsive>
+      <Table responsive bordered size="sm">
          <thead>
             <tr>
-               <th>Trans ID</th>
-               <th>Trans Ammount</th>
+            <th>Trans ID</th>
                <th>Trans Date</th>
-               <th>Trans Type</th>
-               <th>Entry Date</th>
+               <th>Trans Ammount</th>
                <th>Description</th>
                <th />
             </tr>
@@ -107,24 +97,18 @@ export const TransactionEntityDate = (props: ITransactionEntityDateProps) => {
        
             {transactionEntityCREDITDateList.map((transactionEntity, i) => (
               
-            <tr key={`entity-${i}`}>
-               <td>
-                  {transactionEntity.id}
-               </td>
-               <td>{transactionEntity.transAmmount}</td>
-               <td>
-                  {transactionEntity.transDate ? (
-                  <TextFormat type="date" value={transactionEntity.transDate} format={APP_LOCAL_DATE_FORMAT} />
-                  ) : null}
-               </td>
-               <td>{transactionEntity.transType}</td>
-               <td>
-                  {transactionEntity.entryDate ? (
-                  <TextFormat type="date" value={transactionEntity.entryDate} format={APP_DATE_FORMAT} />
-                  ) : null}
-               </td>
-               <td>{transactionEntity.description}</td>
-            </tr>
+              <tr key={`entity-${i}`}>
+              <td>
+                 {transactionEntity.id}
+              </td>
+              <td>
+                 {transactionEntity.transDate ? (
+                 <TextFormat type="date" value={transactionEntity.transDate} format={APP_LOCAL_DATE_FORMAT} />
+                 ) : null}
+              </td>
+              <td>{transactionEntity.transAmmount}</td>
+              <td>{transactionEntity.description}</td>
+           </tr>
                   
             ))}
          </tbody>

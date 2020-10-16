@@ -17,12 +17,14 @@ export interface IAccountEntityDetailProps extends StateProps, DispatchProps, Ro
 export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
   useEffect(() => {
     props.getEntity(props.match.params.id);
-    // `myVar.id = parseInt(props.match.params.id,10);
+
   }, []);
   
  
-  // const {transactionEntityList}= props
+  
   const { accountEntityEntity } = props;
+  const transactionEntityDebitDateList= accountEntityEntity.transactionEntities.filter(transactionEntity=>transactionEntity.transType==="DEBIT");
+    const transactionEntityCREDITDateList= accountEntityEntity.transactionEntities.filter(transactionEntity=>transactionEntity.transType==="CREDIT");
   return (
     <div>
       <div>
@@ -79,10 +81,10 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
       Debit
    </h3>
    <div className="table-responsive">
-      {accountEntityEntity.transactionEntities && accountEntityEntity.transactionEntities.length > 0  ? (
+      {transactionEntityDebitDateList && transactionEntityDebitDateList.length > 0  ? (
   
   
-      <Table responsive>
+      <Table responsive  bordered size="sm">
          <thead>
             <tr>
                <th>Trans ID</th>
@@ -96,7 +98,7 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
          </thead>
          <tbody>
        
-            {accountEntityEntity.transactionEntities.map((transactionEntity, i) => (
+            {transactionEntityDebitDateList.map((transactionEntity, i) => (
               
             <tr key={`entity-${i}`}>
                <td>
@@ -131,8 +133,9 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
       Credit
    </h3>
    <div className="table-responsive">
-      {accountEntityEntity.transactionEntities && accountEntityEntity.transactionEntities.length > 0  ? (
-      <Table responsive>
+   
+      {transactionEntityCREDITDateList&& transactionEntityCREDITDateList.length > 0  ? (
+      <Table responsive  bordered size="sm">
          <thead>
             <tr>
                <th>Trans ID</th>
@@ -144,7 +147,28 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
                <th />
             </tr>
          </thead>
-         <tbody></tbody>
+         <tbody>{transactionEntityCREDITDateList.map((transactionEntity, i) => (
+              
+              <tr key={`entity-${i}`}>
+                 <td>
+                    {transactionEntity.id}
+                 </td>
+                 <td>{transactionEntity.transAmmount}</td>
+                 <td>
+                    {transactionEntity.transDate ? (
+                    <TextFormat type="date" value={transactionEntity.transDate} format={APP_LOCAL_DATE_FORMAT} />
+                    ) : null}
+                 </td>
+                 <td>{transactionEntity.transType}</td>
+                 <td>
+                    {transactionEntity.entryDate ? (
+                    <TextFormat type="date" value={transactionEntity.entryDate} format={APP_DATE_FORMAT} />
+                    ) : null}
+                 </td>
+                 <td>{transactionEntity.description}</td>
+              </tr>
+                    
+              ))}</tbody>
          </Table>
       ):(<div></div>)}</div>
 </Col>
