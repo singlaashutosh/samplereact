@@ -23,8 +23,9 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
  
   
   const { accountEntityEntity } = props;
-  const transactionEntityDebitDateList= accountEntityEntity.transactionEntities.filter(transactionEntity=>transactionEntity.transType==="DEBIT");
-    const transactionEntityCREDITDateList= accountEntityEntity.transactionEntities.filter(transactionEntity=>transactionEntity.transType==="CREDIT");
+  const transactions= accountEntityEntity.transactionEntities;
+ // const transactionEntityDebitDateList= transactions.filter(transactionEntity=>transactionEntity.transType==="DEBIT");
+// const transactionEntityCREDITDateList= transactions.
   return (
     <div>
       <div>
@@ -77,11 +78,13 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
 <div>
 <Row>
    <Col md="6">
-   <h3 id="transaction-entity-heading" >
-      Debit
-   </h3>
+   <div className="container">
+  <div className="row justify-content-center">
+    <h3>Debit</h3>
+  </div>
+</div>
    <div className="table-responsive">
-      {transactionEntityDebitDateList && transactionEntityDebitDateList.length > 0  ? (
+      {transactions && transactions.length > 0  ? (
   
   
       <Table responsive  bordered size="sm">
@@ -93,12 +96,12 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
                <th>Trans Type</th>
                <th>Entry Date</th>
                <th>Description</th>
-               <th />
+               
             </tr>
          </thead>
          <tbody>
        
-            {transactionEntityDebitDateList.map((transactionEntity, i) => (
+            {transactions.filter(transactionEntity=>transactionEntity.transType==="DEBIT").map((transactionEntity, i) => (
               
             <tr key={`entity-${i}`}>
                <td>
@@ -129,12 +132,14 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
       </Col>
      
       <Col md="6">
-      <h3 id="transaction-entity-heading"  >
-      Credit
-   </h3>
+      <div className="container">
+  <div className="row justify-content-center">
+    <h3>Credit</h3>
+  </div>
+</div>
    <div className="table-responsive">
    
-      {transactionEntityCREDITDateList&& transactionEntityCREDITDateList.length > 0  ? (
+      {transactions&& transactions.length > 0  ? (
       <Table responsive  bordered size="sm">
          <thead>
             <tr>
@@ -144,10 +149,10 @@ export const AccountEntityDetail = (props: IAccountEntityDetailProps) => {
                <th>Trans Type</th>
                <th>Entry Date</th>
                <th>Description</th>
-               <th />
+              
             </tr>
          </thead>
-         <tbody>{transactionEntityCREDITDateList.map((transactionEntity, i) => (
+         <tbody>{transactions.filter(transactionEntity=>transactionEntity.transType==="CREDIT").map((transactionEntity, i) => (
               
               <tr key={`entity-${i}`}>
                  <td>
