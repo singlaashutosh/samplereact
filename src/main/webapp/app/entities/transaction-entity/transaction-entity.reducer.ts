@@ -13,6 +13,7 @@ export const ACTION_TYPES = {
   UPDATE_TRANSACTIONENTITY: 'transactionEntity/UPDATE_TRANSACTIONENTITY',
   DELETE_TRANSACTIONENTITY: 'transactionEntity/DELETE_TRANSACTIONENTITY',
   FETCH_TRANSACTIONENTITY_LIST_DATE: 'transactionEntity/FETCH_TRANSACTIONENTITY_LIST_DATE',
+
   RESET: 'transactionEntity/RESET',
 };
 
@@ -40,6 +41,7 @@ export default (state: TransactionEntityState = initialState, action): Transacti
         updateSuccess: false,
         loading: true,
       };
+
     case REQUEST(ACTION_TYPES.CREATE_TRANSACTIONENTITY):
     case REQUEST(ACTION_TYPES.UPDATE_TRANSACTIONENTITY):
     case REQUEST(ACTION_TYPES.DELETE_TRANSACTIONENTITY):
@@ -80,6 +82,7 @@ export default (state: TransactionEntityState = initialState, action): Transacti
         loading: false,
         entities: action.payload.data,
       };
+
     case SUCCESS(ACTION_TYPES.CREATE_TRANSACTIONENTITY):
     case SUCCESS(ACTION_TYPES.UPDATE_TRANSACTIONENTITY):
       return {
@@ -95,6 +98,7 @@ export default (state: TransactionEntityState = initialState, action): Transacti
         updateSuccess: true,
         entity: {},
       };
+
     case ACTION_TYPES.RESET:
       return {
         ...initialState,
@@ -124,7 +128,7 @@ export const getEntity: ICrudGetAction<ITransactionEntity> = id => {
 export const getEntitiesbydate: ICrudGetAction<ITransactionEntity> = id => {
   const requestUrl = `${apiUrl}/Date/${id}`;
   return {
-    type: ACTION_TYPES.FETCH_TRANSACTIONENTITY,
+    type: ACTION_TYPES.FETCH_TRANSACTIONENTITY_LIST_DATE,
     payload: axios.get<ITransactionEntity>(requestUrl),
   };
 };

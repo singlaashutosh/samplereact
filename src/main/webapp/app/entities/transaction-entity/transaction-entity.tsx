@@ -9,7 +9,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './transaction-entity.reducer';
 import { ITransactionEntity } from 'app/shared/model/transaction-entity.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-
+import moment from 'moment';
 export interface ITransactionEntityProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
 export const TransactionEntity = (props: ITransactionEntityProps) => {
@@ -27,7 +27,9 @@ export const TransactionEntity = (props: ITransactionEntityProps) => {
           &nbsp; Create new Transaction Entity
         </Link>
       </h2>
-      
+      <Button tag={Link} to={`${match.url}/Date/${moment().format("YYYY-MM-DD")}`} color="info" size="sm">
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Dates</span>
+                      </Button>
       <div className="table-responsive">
         {transactionEntityList && transactionEntityList.length > 0 ? (
           <Table responsive>
