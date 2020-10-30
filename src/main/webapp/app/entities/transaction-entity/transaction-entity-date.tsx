@@ -13,7 +13,7 @@ export interface ITransactionEntityDateProps extends StateProps, DispatchProps, 
 
 export const TransactionEntityDate = (props: ITransactionEntityDateProps) => {
      useEffect(() => {
-      props.getEntitiesbydate(props.match.params.date);
+     props.getEntitiesbydate(props.match.params.date);
     }, []); 
     const { transactionEntityDateList, match, loading } = props;
     const transactionEntityDebitDateList= transactionEntityDateList.filter(transactionEntity=>transactionEntity.transType==="DEBIT");

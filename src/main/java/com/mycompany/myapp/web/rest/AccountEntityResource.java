@@ -106,6 +106,7 @@ public class AccountEntityResource {
         log.debug("REST request to get AccountEntity : {}", id);
         Optional<AccountEntity> accountEntity = accountEntityRepository.findById(id);
         Set<TransactionEntity> transactionEntities= transactionEntityRepository.findByAccountEntityCode(accountEntity.get().getCode());
+        
         accountEntity.get().setTransactionEntities(transactionEntities);
         return ResponseUtil.wrapOrNotFound(accountEntity);
     }

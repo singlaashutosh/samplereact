@@ -6,6 +6,8 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
 import AccountEntity from './account-entity';
 import TransactionEntity from './transaction-entity';
+import TransactionEntityDate from './transaction-entity/transaction-entity-date';
+
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -14,6 +16,7 @@ const Routes = ({ match }) => (
       {/* prettier-ignore */}
       <ErrorBoundaryRoute path={`${match.url}account-entity`} component={AccountEntity} />
       <ErrorBoundaryRoute path={`${match.url}transaction-entity`} component={TransactionEntity} />
+      <ErrorBoundaryRoute path={`${match.url}transaction-entitiy/Date/`} component={TransactionEntityDate} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>
